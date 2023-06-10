@@ -1,0 +1,127 @@
+<Main>
+    GridLayout:
+        cols: 2
+        size: root.width, root.height
+
+        GridLayout:
+            canvas.before:
+                Color:
+                    rgba: (0.6, 0.6, 0.6, 0.89)
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            size_hint: None, 1
+            width: 75
+            spacing: 40
+            cols: 1
+            Button:
+                background_normal: ''
+                background_color: .2, .2, .2, 0.06
+                StackLayout:  
+                    pos: self.parent.pos
+                    size: self.parent.size 
+                    Image:
+                        source: 'home.png'
+            Button:
+                background_normal: ''
+                background_color: .2, .2, .2, 0.06
+                StackLayout:
+                    pos: self.parent.pos
+                    size: self.parent.size
+                    Image:
+                        source: 'about.png'
+                        width: 40
+        GridLayout:
+            canvas.before:
+                Color:
+                    rgba: (0.2, 0.2, 0.2, 0.63)
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            cols: 2
+            size_hint: None, 0.8
+            width: root.width - 80
+            GridLayout:
+                cols: 1
+                rows: 4
+                spacing: 4
+                canvas.before:
+                    Color:
+                        rgba: (0.8, 0.8, 0.8, 0.8)
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+                RoundedButton:
+                    text: "Open file"
+                    size_hint: 1, 0.1
+                    background_normal: ''
+                    background_color: .4, .4, .4, .85
+                    on_press: root.select_file()
+                Button:
+                    id: removebtn
+                    text: "Remove"
+                    size_hint: 1, 0.1
+                    background_normal: ''
+                    background_color: .4, .4, .4, .85
+                    on_press: root.remove_file()
+
+                BoxLayout:
+                    orientation: 'vertical'
+                    padding: 10
+                    spacing: 5
+                    Image:
+                        id: bck
+                        center: self.parent.center
+                        source: 'empty.png'   
+                Button:
+                    id: convertbtn
+                    text: "Convert to Text"   
+                    size_hint: 1, 0.1
+                    background_normal: ''
+                    disabled: True
+                    background_color: .4, .4, .4, .85    
+                    on_press: root.convert()  
+
+
+            GridLayout:
+                cols: 1
+                rows: 2
+                canvas.before:
+                    Color:
+                        rgba: (0.8, 0.8, 0.8, 0.9)
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+                TextInput:
+                    id: output
+                    font_size: 30
+                    size_hint: (1, 12)
+                    text: ""
+                    hint_text:  "No Image Selected..."
+                BoxLayout:
+                    orientation: "horizontal" 
+                    Button:
+                        id: clipboardbtn
+                        text: "Copy to Clipboard"
+                        disabled: True
+                        background_color: .4, .4, .4, .85 
+                        on_press: root.copy_to_clipboard()
+                    Button:
+                        id: pdfbtn
+                        text: "Export as PDF"  
+                        disabled: True
+                        background_color: .4, .4, .4, .85  
+                        on_press: root.export_as_pdf()        
+
+
+
+
+<RoundedButton@Button>:
+    background_color: 0,0,0,0  # the last zero is the critical on, make invisible
+    canvas.before:
+        Color:
+            rgba: (.4,.4,.4,1) if self.state=='normal' else (0,.7,.7,1)  # visual feedback of press
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [10,10]
